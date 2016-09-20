@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">SimpleTodo</string>
+    <string name="app_name">myTask</string>
     <string name="save">Save</string>
     <string name="edit_item_label">Edit Item Below:</string>
+    <string-array name="repeat_array">
+        <item>No repeat</item>
+        <item>Once a day</item>
+        <item>Once a week</item>
+        <item>Once a month</item>
+    </string-array>
+    <string-array name="urgency_array">
+        <item>HIGH</item>
+        <item>MEDIUM</item>
+        <item>LOW</item>
+    </string-array>
 </resources>

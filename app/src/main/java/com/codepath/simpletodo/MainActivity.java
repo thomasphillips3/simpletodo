@@ -2,53 +2,81 @@ package com.codepath.simpletodo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 20;
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
+    ArrayList<TodoItem> items;
+    TodoItemAdapter itemsAdapter;
     ListView lvItems;
+    TodoItemDatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        databaseHelper = TodoItemDatabaseHelper.getInstance(this);
+        items = new ArrayList<>(databaseHelper.getAllTodoItems());
+        itemsAdapter = new TodoItemAdapter(this, items);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        //items.add("First Item");
-        //items.add("Second Item");
+        refreshItems();
         setupListViewListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshItems();
+        Toast.makeText(this, "resumed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_addItem:
+                addItem();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
     private void setupListViewListener() {
-        lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                items.remove(position);
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
-                return true;
-            }
-        });
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-                i.putExtra("itemValue", items.get(position));
-                i.putExtra("itemPosition", position);
+                Intent i = new Intent(MainActivity.this, TodoDisplayActivity.class);
+                TodoItem todoItem = itemsAdapter.getItem(position);
+                i.putExtra("id", todoItem.id);
+                i.putExtra("text", todoItem.itemText);
+                i.putExtra("dueDate", todoItem.dueDate.getTime());
+                i.putExtra("repeat", todoItem.repeat.getRepeat());
+                i.putExtra("urgency", todoItem.urgency.getUrgency());
+                i.putExtra("status", todoItem.status.getStatus());
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
@@ -57,39 +85,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            String editedText = data.getExtras().getString("itemValue");
-            int position = data.getExtras().getInt("itemPosition");
-            items.set(position, editedText);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+            Log.d("ADDED", "Item was added to list of tasks");
         }
     }
 
-    public void onAddItem(View v) {
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
-        writeItems();
+    public void addItem() {
+        Intent i = new Intent(MainActivity.this, EditItemActivity.class);
+        startActivityForResult(i, REQUEST_CODE);
     }
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException exception) {
-            items = new ArrayList<String>();
-        }
-    }
-
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, items);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    private void refreshItems() {
+        itemsAdapter.clear();
+        List<TodoItem> todoItems = databaseHelper.getAllTodoItems();
+        Collections.sort(todoItems, new Comparator<TodoItem>() {
+            @Override
+            public int compare(TodoItem t1, TodoItem t2) {
+                if (t1.status == TodoItem.Status.DONE || t2.status == TodoItem.Status.DONE) {
+                    return t1.status.getStatus() - t2.status.getStatus();
+                }
+                return t1.urgency.getUrgency() - t2.urgency.getUrgency();
+            }
+        });
+        itemsAdapter.addAll(todoItems);
     }
 }

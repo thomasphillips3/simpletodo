@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.codepath.simpletodo.EditItemActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" >
 
@@ -28,17 +23,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="To-Do:"
-                    android:id="@+id/tvTodoLabel" />
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/etTodoItem"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/tvTodoLabel" />
+                    android:text="New Text"
+                    android:id="@+id/tvTodoText" />
 
             </RelativeLayout>
 
@@ -49,16 +35,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Due Date:"
+                    android:text="Due Date: "
                     android:id="@+id/tvDueDateLabel" />
 
-                <DatePicker
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dueDatePicker"
-                    android:layout_toEndOf="@id/tvDueDateLabel"
-                    android:datePickerMode="spinner"
-                    android:calendarViewShown="false" />
+                    android:text="New Text"
+                    android:id="@+id/tvDueDateText"
+                    android:layout_toEndOf="@id/tvDueDateLabel" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -68,14 +53,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Due Time:"
+                    android:text="Due Time: "
                     android:id="@+id/tvDueTimeLabel" />
 
-                <TimePicker
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dueTimePicker"
-                    android:timePickerMode="spinner"
+                    android:text="New Text"
+                    android:id="@+id/tvDueTimeText"
                     android:layout_toEndOf="@id/tvDueTimeLabel" />
             </RelativeLayout>
 
@@ -86,15 +71,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Urgency:"
+                    android:text="Urgency: "
                     android:id="@+id/tvUrgencyLabel" />
 
-                <Spinner
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/urgencySpinner"
+                    android:text="New Text"
+                    android:id="@+id/tvUrgencyText"
                     android:layout_toEndOf="@id/tvUrgencyLabel" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -104,24 +89,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Repeat:"
+                    android:text="Repeat: "
                     android:id="@+id/tvRepeatLabel" />
 
-                <Spinner
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/repeatSpinner"
+                    android:text="New Text"
+                    android:id="@+id/tvRepeatText"
                     android:layout_toEndOf="@id/tvRepeatLabel" />
-
             </RelativeLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:id="@+id/saveButton"
-                android:nestedScrollingEnabled="false"
-                android:onClick="saveItem" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Done?"
+                    android:id="@+id/statusSwitch" />
+
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
