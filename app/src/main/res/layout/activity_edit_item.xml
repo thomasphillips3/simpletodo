@@ -28,8 +28,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="To-Do:"
-                    android:id="@+id/tvTodoLabel" />
+                    android:text="Task:"
+                    android:id="@+id/tvTodoLabel"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:textColor="@android:color/holo_purple"
+                    android:layout_marginRight="5dp" />
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -50,7 +54,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Due Date:"
-                    android:id="@+id/tvDueDateLabel" />
+                    android:id="@+id/tvDueDateLabel"
+                    android:textSize="9pt"
+                    android:textColor="@android:color/holo_purple"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp" />
 
                 <DatePicker
                     android:layout_width="wrap_content"
@@ -58,7 +67,8 @@
                     android:id="@+id/dueDatePicker"
                     android:layout_toEndOf="@id/tvDueDateLabel"
                     android:datePickerMode="spinner"
-                    android:calendarViewShown="false" />
+                    android:calendarViewShown="false"
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -69,14 +79,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Due Time:"
-                    android:id="@+id/tvDueTimeLabel" />
+                    android:id="@+id/tvDueTimeLabel"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:textColor="@android:color/holo_purple"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp" />
 
                 <TimePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/dueTimePicker"
                     android:timePickerMode="spinner"
-                    android:layout_toEndOf="@id/tvDueTimeLabel" />
+                    android:layout_toEndOf="@id/tvDueTimeLabel"
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -87,13 +103,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Urgency:"
-                    android:id="@+id/tvUrgencyLabel" />
+                    android:id="@+id/tvUrgencyLabel"
+                    android:textStyle="bold"
+                    android:textSize="9pt"
+                    android:textColor="@android:color/holo_purple"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp" />
 
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/urgencySpinner"
-                    android:layout_toEndOf="@id/tvUrgencyLabel" />
+                    android:layout_toEndOf="@id/tvUrgencyLabel"
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -122,7 +144,9 @@
                 android:text="@string/save"
                 android:id="@+id/saveButton"
                 android:nestedScrollingEnabled="false"
-                android:onClick="saveItem" />
+                android:onClick="saveItem"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 

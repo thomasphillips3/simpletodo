@@ -122,7 +122,6 @@ public class TodoDisplayActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            Toast.makeText(this, "Edited Item", Toast.LENGTH_SHORT).show();
             updateView(data.getExtras());
         }
     }
