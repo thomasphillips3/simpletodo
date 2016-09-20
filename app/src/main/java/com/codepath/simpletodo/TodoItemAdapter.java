@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -46,13 +47,26 @@ public class TodoItemAdapter extends ArrayAdapter<TodoItem> {
                 todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.darker_gray));
             }
         } else {
-            tvUrgency.setText(getContext().getResources().getStringArray(R.array.urgency_array)[todoItem.urgency.getUrgency()]);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.black, getContext().getTheme()));
-                tvUrgency.setTextColor(getContext().getResources().getColor(urgencyColorMap.get(todoItem.urgency), getContext().getTheme()));
+            Calendar currentCalendar = Calendar.getInstance();
+            if (todoItem.dueDate.compareTo(currentCalendar.getTime()) < 0) {
+                tvUrgency.setText("OVERDUE");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.holo_red_dark, getContext().getTheme()));
+                    tvUrgency.setTextColor(getContext().getResources().getColor(android.R.color.holo_red_dark, getContext().getTheme()));
+                } else {
+                    tvUrgency.setTextColor(getContext().getResources().getColor(android.R.color.holo_red_dark));
+                    todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.holo_red_dark));
+                }
             } else {
-                tvUrgency.setTextColor(getContext().getResources().getColor(urgencyColorMap.get(todoItem.urgency)));
-                todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.black));
+                tvUrgency.setText(getContext().getResources().getStringArray(R.array.urgency_array)[todoItem.urgency.getUrgency()]);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.black, getContext().getTheme()));
+                    tvUrgency.setTextColor(getContext().getResources().getColor(urgencyColorMap.get(todoItem.urgency), getContext().getTheme()));
+                } else {
+                    tvUrgency.setTextColor(getContext().getResources().getColor(urgencyColorMap.get(todoItem.urgency)));
+                    todoLabel.setTextColor(getContext().getResources().getColor(android.R.color.black));
+                }
             }
         }
         return  convertView;

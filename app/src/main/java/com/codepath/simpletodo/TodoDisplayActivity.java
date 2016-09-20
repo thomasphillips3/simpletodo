@@ -21,7 +21,7 @@ public class TodoDisplayActivity extends AppCompatActivity {
     TextView todoText;
     TextView dueDateText;
     TextView dueTimeText;
-    TextView repeatText;
+    // TextView repeatText;
     TextView urgencyText;
     Switch statusSwitch;
     TodoItemDatabaseHelper databaseHelper;
@@ -33,7 +33,7 @@ public class TodoDisplayActivity extends AppCompatActivity {
         todoText = (TextView) findViewById(R.id.tvTodoText);
         dueDateText = (TextView) findViewById(R.id.tvDueDateText);
         dueTimeText = (TextView) findViewById(R.id.tvDueTimeText);
-        repeatText = (TextView) findViewById(R.id.tvRepeatText);
+        // repeatText = (TextView) findViewById(R.id.tvRepeatText);
         urgencyText = (TextView) findViewById(R.id.tvUrgencyText);
         statusSwitch = (Switch) findViewById(R.id.statusSwitch);
         databaseHelper = TodoItemDatabaseHelper.getInstance(this);
@@ -83,7 +83,7 @@ public class TodoDisplayActivity extends AppCompatActivity {
         int repeat = todoItem.repeat.getRepeat();
         int urgency = todoItem.urgency.getUrgency();
         int status = todoItem.status.getStatus();
-        repeatText.setText(getResources().getStringArray(R.array.repeat_array)[repeat]);
+        // repeatText.setText(getResources().getStringArray(R.array.repeat_array)[repeat]);
         urgencyText.setText(getResources().getStringArray(R.array.urgency_array)[urgency]);
         statusSwitch.setChecked(TodoItem.Status.values()[status] == TodoItem.Status.DONE);
         setupSwitchListener();

@@ -83,7 +83,8 @@ public class EditItemActivity extends AppCompatActivity {
         }
         todoItem.dueDate = calendar.getTime();
 
-        todoItem.repeat = TodoItem.Repeat.values()[repeatSpinner.getSelectedItemPosition()];
+        // todoItem.repeat = TodoItem.Repeat.values()[repeatSpinner.getSelectedItemPosition()];
+        todoItem.repeat = TodoItem.Repeat.NO_REPEAT;
         todoItem.urgency = TodoItem.Urgency.values()[urgencySpinner.getSelectedItemPosition()];
         TodoItemDatabaseHelper databaseHelper = TodoItemDatabaseHelper.getInstance(this);
         todoItem.id = databaseHelper.addOrUpdateTodoItem(todoItem);

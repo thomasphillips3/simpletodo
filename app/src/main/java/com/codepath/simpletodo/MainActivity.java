@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -97,11 +98,15 @@ public class MainActivity extends AppCompatActivity {
     private void refreshItems() {
         itemsAdapter.clear();
         List<TodoItem> todoItems = databaseHelper.getAllTodoItems();
-        Collections.sort(todoItems, new Comparator<TodoItem>() {
+        final Calendar currentCalendar = Calendar.getInstance();
+            Collections.sort(todoItems, new Comparator<TodoItem>() {
             @Override
             public int compare(TodoItem t1, TodoItem t2) {
                 if (t1.status == TodoItem.Status.DONE || t2.status == TodoItem.Status.DONE) {
                     return t1.status.getStatus() - t2.status.getStatus();
+                }
+                if (t1.dueDate.compareTo(currentCalendar.getTime()) < 0) {
+                    return -100;
                 }
                 return t1.urgency.getUrgency() - t2.urgency.getUrgency();
             }

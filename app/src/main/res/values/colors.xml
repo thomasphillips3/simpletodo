@@ -6,4 +6,5 @@
     <color name="colorHigh">#ff6040</color>
     <color name="colorMedium">#ffd640</color>
     <color name="colorLow">#40c3ff</color>
+    <color name="colorActionBar">#88d6d6</color>
 </resources>
